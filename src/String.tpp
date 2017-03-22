@@ -65,9 +65,9 @@ int String<TChar>::cstr_compare(const TChar* str1, const TChar* str2)
 			str1 = str1 + 1;
 			str2 = str2 + 1;
 		}
-		return(*(str1)-*(str2));
+		return (*str1) - (*str2);
 	}
-	return 0;
+	return 1; // TODO: Throw exception
 }
 
 
@@ -187,15 +187,15 @@ void String<TChar>::copy(const String<TChar>& source, size_t pos, size_t len)
 }
 
 template<class TChar>
-inline const TChar* String<TChar>::c_str() const
+const TChar* String<TChar>::c_str() const
 {
 	return usesDynamicBuffer() ? m_buffer : m_ssoBuffer;
 }
 
 template<class TChar>
-TChar* String<TChar>::data() const
+TChar* String<TChar>::data()
 {
-	return const_cast<TChar*>(c_str());
+	return usesDynamicBuffer() ? m_buffer : m_ssoBuffer;
 }
 
 template<class TChar>
